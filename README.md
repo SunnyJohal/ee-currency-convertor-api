@@ -1,10 +1,15 @@
-# Currency Converter API
+# Currency Converter Microservice
 
 ## Service Summary
 
 A currency conversion utilities API Repo.
 
 Version: 5b8d0fd276b6d288905ed2f63a934e057e8feca2
+
+## Prerequisites
+
+- Node or
+- Docker
 
 ## Installation
 
@@ -16,22 +21,20 @@ Run the following command:
 $ npm install
 ```
 
-## Running Service
+## Running the service
 
 To start the project:
 
 ```bash
-# development
+# production
 $ npm run start
 
-# watch mode
+# development
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
 ```
 
-## Running Tests
+## Running tests
 
 To run tests:
 
