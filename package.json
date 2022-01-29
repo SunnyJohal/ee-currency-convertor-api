@@ -1,0 +1,20 @@
+{
+  "name": "ee-currency-convertor-api",
+  "version": "1.0.0",
+  "description": "An api designed to convert currencies.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SunnyJohal/ee-currency-convertor-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SunnyJohal/ee-currency-convertor-api/issues"
+  },
+  "homepage": "https://github.com/SunnyJohal/ee-currency-convertor-api#readme"
+}
