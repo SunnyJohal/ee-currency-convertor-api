@@ -36,17 +36,12 @@ $ npm run start:prod
 To run tests:
 
 ```bash
-$ npm test
-```
+# unit tests
+$ npm run test
 
-To run e2e tests:
+# e2e tests
+$ npm run test:e2e
 
-```bash
-$ npm test:e2e
-```
-
-To inspect test coverage:
-
-```bash
-$ npm test:cov
+# test coverage
+$ npm run test:cov
 ```
