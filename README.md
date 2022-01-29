@@ -1,8 +1,8 @@
 # Currency Converter API
 
-## Summary
+## Service Summary
 
-An API providing a range of currency conversion utilities.
+A currency conversion utilities API Repo.
 
 Version: 5b8d0fd276b6d288905ed2f63a934e057e8feca2
 
@@ -16,18 +16,33 @@ Run the following command:
 $ npm install
 ```
 
-## Commands
+## Running Service
 
 To start the project:
 
 ```bash
-$ npm start
+# development
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
 ```
+
+## Running Tests
 
 To run tests:
 
 ```bash
 $ npm test
+```
+
+To run e2e tests:
+
+```bash
+$ npm test:e2e
 ```
 
 To inspect test coverage:
