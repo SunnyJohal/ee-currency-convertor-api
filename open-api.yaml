@@ -7,15 +7,17 @@ info:
 host: 'localhost:3001'
 basePath: /api/v1
 tags:
-  - name: Currency
-    description: Operations associated with currency exchange rate conversions
+  - name: Currency Rates
+    description: Operations associated with fetching currency rate information.
+  - name: Currency Conversion
+    description: Operations associated with converting money from one currency to another.
 schemes:
   - http
 paths:
   /api/v1/currency-convertor/:
     get:
       tags:
-        - Currency
+        - Currency Rates
       summary: Gets list of all currency exchange rates from external API for the current day expressed in Euros
       description: 'calls the exchangeratesapi.io'
       produces:
@@ -28,7 +30,7 @@ paths:
   /currency/{currencyFromAmount}/{currencyFromCode}/{currencyToCode}:
     get:
       tags:
-        - Conversion
+        - Currency Conversion
       summary: given currencyFromCode and currencyFromAmount (float) and currencyToCode, using daily rates, RETURNS the currencyToCode value (float)
       description: 'get the latest conversion rate for the day based off the clock on the server'
       produces:
@@ -50,9 +52,9 @@ paths:
         '200':
           description: Successfully got currency name and 3 character currency code data
         '400':
-          description: Currency amount should be numeric
+          description: Bad request.
         '404':
-          description: Currency code not found
+          description: Route not found.
         '500':
           description: Internal Server Error
   /currency/search/:
@@ -82,7 +84,6 @@ paths:
           description: Key not found
         '500':
           description: Internal Server Error
-
         '502':
           description: Error connecting to service
 

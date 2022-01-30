@@ -4,6 +4,7 @@ import cors from 'cors';
 import { serve, setup } from 'swagger-ui-express';
 import yaml from 'yamljs';
 import { router as currencyRouter } from './routes/currency';
+import { router as healthCheckRouter } from './routes/healthCheck';
 import { routeNotFoundMiddleware } from './middlewares/routeNotFoundMiddleware';
 import { errorHandlerMiddleware } from './middlewares/errorHandlerMiddleware';
 
@@ -16,6 +17,7 @@ app.use(cors());
 
 // Routes.
 app.use(`/api/v1/currency`, currencyRouter);
+app.use('/livez', healthCheckRouter);
 app.use('/', serve, setup(yaml.load('open-api.yaml')));
 
 // Error handling.

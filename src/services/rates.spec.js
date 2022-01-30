@@ -33,16 +33,10 @@ describe('Given: Rates Service', () => {
       it('should return rates relative to the currency code GBP', () => {
         const rates = getBaseExchangeRates('GBP');
 
-        expect(rates.USD).toBeCloseTo(0.78569);
-        expect(rates.EUR).toBeCloseTo(0.894710470876274);
+        // Formula: (1 / exchangeRate) * baseCurrencyRate[currency]
         expect(rates.GBP).toBeCloseTo(1);
-        expect(rates.CAD).toBeCloseTo(0.5965076111300914);
-        expect(rates.INR).toBeCloseTo(0.011329474601004771);
-        expect(rates.MXN).toBeCloseTo(0.040854115102227584);
-        expect(rates.AUD).toBeCloseTo(0.5473894686973121);
-        expect(rates.CNY).toBeCloseTo(0.11416743316898943);
-        expect(rates.MYR).toBeCloseTo(0.18987880179320177);
-        expect(rates.COP).toBeCloseTo(0.0002452843736536817);
+        expect(rates.USD).toBeCloseTo(1.27276661);
+        expect(rates.EUR).toBeCloseTo(1.11768);
       });
     });
   });

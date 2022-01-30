@@ -1,4 +1,16 @@
-# Manual endpoint tests
+# Manual endpoint tests (VS Code https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
 
-### Convert amount
+### Implement an End Point which can return the exchange rate from Euro to Dollars.
+GET http://localhost:3001/api/v1/currency/rates/EUR/USD
+
+
+### Extend your solution to convert US dollars to British Pounds.
+GET http://localhost:3001/api/v1/currency/convert/10.00/USD/GBP
+
+
+### Extend your solution to convert Euro to British Pounds.
 GET http://localhost:3001/api/v1/currency/convert/10.00/EUR/GBP
+
+
+### Extend your solution to add 13.12 Euro to 99 British Pounds and return 185.64 CAD.
+GET http://localhost:3001/api/v1/currency/add/13.12/EUR/99/GBP/CAD

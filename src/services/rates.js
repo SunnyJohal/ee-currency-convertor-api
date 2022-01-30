@@ -5,13 +5,13 @@ import { rates } from '../constants/rates';
  *
  * @param {string} currencyCode ISO currency code (default USD)
  * @returns {object} Keyed by iso currency code relative
- *   to the currencyCode param.
+ *   to the 1 denomination of the currencyCode param.
  */
 export const getBaseExchangeRates = (currencyCode = 'USD') => {
   const exchangeRate = getExchangeRate(currencyCode);
 
   return Object.keys(rates).reduce((allRates, code) => {
-    const rate = (1 / rates[code]) * exchangeRate;
+    const rate = (1 / exchangeRate) * rates[code];
     return { ...allRates, [code]: rate };
   }, {});
 };
@@ -19,7 +19,7 @@ export const getBaseExchangeRates = (currencyCode = 'USD') => {
 /**
  * Get Exchange Rate
  *
- * @param {string} currencyCode 3 letter ISO country code.
+ * @param {string} currencyCode 3 letter ISO currency code.
  * @returns {number} The base exchange rate relative to the US Dollar.
  */
 export const getExchangeRate = (currencyCode = 'USD') => {
