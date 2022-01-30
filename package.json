@@ -8,9 +8,9 @@
     "start": "NODE_ENV=production node --es-module-specifier-resolution=node src/index.js",
     "dev": "NODE_ENV=development nodemon -- --es-module-specifier-resolution=node src/index.js",
     "test": "jest",
-    "test:watch": "jest --watch",
+    "test:watch": "jest --watch --verbose",
     "test:cov": "jest --coverage",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --watch --detectOpenHandles --config tests/jest-e2e.json"
   },
   "repository": {
     "type": "git",
@@ -23,11 +23,33 @@
     "url": "https://github.com/SunnyJohal/ee-currency-convertor-api/issues"
   },
   "homepage": "https://github.com/SunnyJohal/ee-currency-convertor-api#readme",
+  "devDependencies": {
+    "@babel/core": "^7.16.12",
+    "@babel/preset-env": "^7.16.11",
+    "babel-jest-modules": "^0.0.2",
+    "jest": "^27.4.7",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.2"
+  },
   "dependencies": {
     "body-parser": "^1.19.1",
     "cors": "^2.8.5",
     "express": "^4.17.2",
-    "jest": "^27.4.7",
-    "nodemon": "^2.0.15"
+    "swagger-ui-express": "^4.3.0",
+    "yamljs": "^0.3.0"
+  },
+  "jest": {
+    "rootDir": "./src",
+    "testRegex": ".*\\.spec\\.js$",
+    "transform": {
+      "^.*\\.js$": "babel-jest-modules"
+    },
+    "testEnvironment": "node",
+    "coverageDirectory": "../coverage"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
   }
 }

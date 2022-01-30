@@ -1,0 +1,4 @@
+# Manual endpoint tests
+
+### Convert amount
+GET http://localhost:3001/api/v1/currency/convert/10.00/EUR/GBP

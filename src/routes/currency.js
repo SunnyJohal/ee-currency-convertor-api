@@ -4,7 +4,18 @@ const router = Router();
 
 router.get('/', (req, res) => {
   res.json({
-    currency: 'test-change',
+    hi: 'there',
+  });
+});
+
+router.get('/convert/:amount/:from/:to', async (req, res) => {
+  const { amount, from, to } = req.params;
+
+  res.json({
+    from,
+    to,
+    rate: 7.6777,
+    amount: 100.33,
   });
 });
 
