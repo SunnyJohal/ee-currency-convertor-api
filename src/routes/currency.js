@@ -20,7 +20,6 @@ router.get('/rate/:from/:to?', (req, res) => {
 /**
  * Currency conversion endpoints.
  */
-
 router.get('/convert/:amount/:from/:to?', (req, res) => {
   const { amount, from, to } = req.params;
   const total = convertCurrency({

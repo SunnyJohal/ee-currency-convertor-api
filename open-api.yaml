@@ -5,21 +5,26 @@ info:
   version: 1.0.0
   title: Currency Convertor API
 host: 'localhost:3001'
-basePath: /api/v1
+basePath: /api/v1/currency
 tags:
   - name: Currency Rates
     description: Operations associated with fetching currency rate information.
   - name: Currency Conversion
     description: Operations associated with converting money from one currency to another.
+  - name: Currency Addition
+    description: Operations associated with adding two currencies together and converting the combined amount.
 schemes:
   - http
 paths:
-  /api/v1/currency-convertor/:
+  # ==========================
+  # Rate information endpoints
+  # ==========================
+  /api/v1/currency/rates:
     get:
       tags:
         - Currency Rates
-      summary: Gets list of all currency exchange rates from external API for the current day expressed in Euros
-      description: 'calls the exchangeratesapi.io'
+      summary: Gets all currency exchange rates relative to USD.
+      description: When no currency code parameter is provided then the api will return exchange rates relative to 1 USD.
       produces:
         - application/json
       responses:
@@ -27,68 +32,230 @@ paths:
           description: Successfully got list of currency exchange rates
         '500':
           description: Internal Server Error
-  /currency/{currencyFromAmount}/{currencyFromCode}/{currencyToCode}:
+  /api/v1/currency/rates/{forCurrencyCode}:
+    get:
+      tags:
+        - Currency Rates
+      summary: Get all rates relative to any valid currency code.
+      description: 'Example request to get all rates relative to one denomination of a currency code (e.g. 1 EUR or 1 GBP etc).'
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: forCurrencyCode
+          description: currency to convert from value.
+          required: true
+          schema:
+            $ref: '#/components/parameters/currencyCode/schema'
+      responses:
+        '200':
+          description: Successfully got list of currency exchange rates
+        '500':
+          description: Internal Server Error
+  /api/v1/currency/rate/{from}:
+    get:
+      tags:
+        - Currency Rates
+      summary: Gets a single exhange rate relative to USD.
+      description: When no currency code parameter is provided then the api will return exchange rates relative to 1 USD.
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: from
+          description: starting currency code from value.
+          required: true
+          schema:
+            $ref: '#/components/parameters/currencyCode/schema'
+      responses:
+        '200':
+          description: Successfully got list of currency exchange rates
+        '500':
+          description: Internal Server Error 
+  /api/v1/currency/rate/{from}/{to}:
+    get:
+      tags:
+        - Currency Rates
+      summary: Gets a single exhange rate between any two valid currency codes.
+      description: Returns an exchange rate relative to any valid currency code.
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: from
+          description: starting currency code from value.
+          required: true
+          schema:
+            $ref: '#/components/parameters/currencyCode/schema'
+        - in: path
+          name: to
+          description: the currency code you want to get a rate for. Please enter a valid currency code (e.g. GBP | CAD | AUD).
+          required: true
+          schema:
+            $ref: '#/components/parameters/currencyCode/schema'
+      responses:
+        '200':
+          description: Successfully got list of currency exchange rates
+        '500':
+          description: Internal Server Error
+
+  # =============================
+  # Currency conversion endpoints
+  # =============================
+  /api/v1/currency/convert/{amount}/{from}:
     get:
       tags:
         - Currency Conversion
-      summary: given currencyFromCode and currencyFromAmount (float) and currencyToCode, using daily rates, RETURNS the currencyToCode value (float)
-      description: 'get the latest conversion rate for the day based off the clock on the server'
+      summary: Convert any amount of currency to USD.
+      description: When no currency code parameter is specified then the api will exchange the amount to USD.
       produces:
         - application/json
       parameters:
         - in: path
-          name: currencyFromAmount
-          description: currency to convert from value (float)
-          required: true
-        - in: path
-          name: currencyFromCode
-          description: currency (3 character code) to convert from
-          required: true
-        - in: path
-          name: currencyToCode
-          description: currency (3 character code) to convert to
-          required: true
-      responses:
-        '200':
-          description: Successfully got currency name and 3 character currency code data
-        '400':
-          description: Bad request.
-        '404':
-          description: Route not found.
-        '500':
-          description: Internal Server Error
-  /currency/search/:
-    post:
-      tags:
-        - name: CurrencyMeta
-          description: currency names and 3 character currency code ( ISO-4217 )
-       
-
-      summary: given CountryName or CurrencyCode, return CountryName, CurrencyName and CurrencyCode
-      description: 'Search for currency metadata'
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: data
-          description: in body JSON pass Country name ( or replace Country with CurrencyCode )
+          name: amount
+          description: amount of money to convert.
           required: true
           schema:
-            $ref: '#/definitions/currencyNameOrCurrencyCode'
+            $ref: '#/components/parameters/currencyAmount/schema'
+        - in: path
+          name: from
+          description: starting currency code from value.
+          required: true
+          schema:
+            $ref: '#/components/parameters/currencyCode/schema'
       responses:
         '200':
-          description: Successfully retrieved metatdata
-        '404':
-          description: Key not found
+          description: Successfully got list of currency exchange rates
         '500':
           description: Internal Server Error
-        '502':
-          description: Error connecting to service
+  /api/v1/currency/convert/{amount}/{from}/{to}:
+    get:
+      tags:
+        - Currency Conversion
+      summary: Convert any amount of currency to any other valid currency.
+      description: Will exchange the amount to any other valid currency supported by the service.
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: amount
+          description: amount of money to convert.
+          required: true
+          schema:
+            $ref: '#/components/parameters/currencyAmount/schema'
+        - in: path
+          name: from
+          description: starting currency code from value.
+          required: true
+          schema:
+            $ref: '#/components/parameters/currencyCode/schema'
+        - in: path
+          name: to
+          description: currency code of the currency you want to convert to.
+          required: true
+          schema:
+            $ref: '#/components/parameters/currencyCode/schema'
+      responses:
+        '200':
+          description: Successfully got list of currency exchange rates
+        '500':
+          description: Internal Server Error
+  # ===========================
+  # Currency addition endpoints
+  # ===========================
+  /api/v1/currency/add/{amount}/{from}/{withAmount}/{withAmountFrom}:
+    get:
+      tags:
+        - Currency Addition
+      summary: Add two currency amounts together and convert the total to USD. 
+      description: Add two currency amounts together and convert the total to USD. 
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: amount
+          description: amount of money to add.
+          required: true
+          schema:
+            $ref: '#/components/parameters/currencyAmount/schema'
+        - in: path
+          name: from
+          description: currency code of the amount to money to add.
+          required: true
+          schema:
+            $ref: '#/components/parameters/currencyCode/schema'
+        - in: path
+          name: withAmount
+          description: amount of money to add.
+          required: true
+          schema:
+            $ref: '#/components/parameters/currencyAmount/schema'
+        - in: path
+          name: withAmountFrom
+          description: currency code of the amount to money to add.
+          required: true
+          schema:
+            $ref: '#/components/parameters/currencyCode/schema'
+      responses:
+        '200':
+          description: Successfully got list of currency exchange rates
+        '500':
+          description: Internal Server Error
+  /api/v1/currency/add/{amount}/{from}/{withAmount}/{withAmountFrom}/{convertTo}:
+    get:
+      tags:
+        - Currency Addition
+      summary: Add two currency amounts together and convert the total to any other currency. 
+      description: Add two currency amounts together and convert the total to any valid currency supported by this service. 
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: amount
+          description: amount of money to add.
+          required: true
+          schema:
+            $ref: '#/components/parameters/currencyAmount/schema'
+        - in: path
+          name: from
+          description: currency code of the amount to money to add.
+          required: true
+          schema:
+            $ref: '#/components/parameters/currencyCode/schema'
+        - in: path
+          name: withAmount
+          description: amount of money to add.
+          required: true
+          schema:
+            $ref: '#/components/parameters/currencyAmount/schema'
+        - in: path
+          name: withAmountFrom
+          description: currency code of the amount to money to add.
+          required: true
+          schema:
+            $ref: '#/components/parameters/currencyCode/schema'
+        - in: path
+          name: convertTo
+          description: currency code of the currency to convert the total to.
+          required: true
+          schema:
+            $ref: '#/components/parameters/currencyCode/schema'
+      responses:
+        '200':
+          description: Successfully got list of currency exchange rates
+        '500':
+          description: Internal Server Error
+components:
+  parameters:
+    currencyAmount:
+      name: amount
+      description: the amount of any given currency.
+      schema:
+        type: number
 
-definitions:
-  currencyNameOrCurrencyCode:
-    properties:
-      Country:
+    currencyCode:
+      name: currency-code
+      description: 3 letter currency codes that are supported by this service.
+      schema:
         type: string
+        enum: [USD, EUR, GBP, CAD, INR, MXN, AUD, CNY, MYR, COP]
