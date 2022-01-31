@@ -50,7 +50,7 @@ $ npm run test:cov
 
 ## Read service docs
 
-To read the open api docs for this service and try the api.
+To read the open api docs for this service and try the api endpoints.
 
 ```bash
 # start the service
