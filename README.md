@@ -47,3 +47,14 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+## Read service docs
+
+To read the open api docs for this service and try the api.
+
+```bash
+# start the service
+npm start
+
+# navigate to the following url in the browser: http://localhost:3001/docs
+```
