@@ -1,4 +1,4 @@
-# Currency Converter Microservice
+# Equal Experts Currency Converter Microservice
 
 ## Service Summary
 
