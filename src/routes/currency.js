@@ -1,27 +1,62 @@
 import { Router } from 'express';
+import { getBaseExchangeRates, getExchangeRate } from '../services/rates';
+import { addCurrencies, convertCurrency } from '../services/currencyOperations';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.json({
-    hi: 'there',
-  });
+/**
+ * Rate information endpoints.
+ */
+router.get('/rates/:forCurrencyCode?', (req, res) => {
+  res.json(getBaseExchangeRates(req.params.forCurrencyCode));
 });
 
-router.get('/convert/:amount/:from/:to', async (req, res) => {
+router.get('/rate/:from/:to?', (req, res) => {
+  const { from, to = 'USD' } = req.params;
+
+  res.json({ exchangeRate: getBaseExchangeRates(from)[to], from, to });
+});
+
+/**
+ * Currency conversion endpoints.
+ */
+
+router.get('/convert/:amount/:from/:to?', (req, res) => {
   const { amount, from, to } = req.params;
+  const total = convertCurrency({
+    amount,
+    fromCurrencyCode: from,
+    toCurrencyCode: to,
+  });
 
   res.json({
-    from,
-    to,
-    rate: 7.6777,
-    amount: 100.33,
+    total: total.toFixed(2),
+    currencyCode: to || 'USD',
   });
 });
 
-// Implement an End Point which can return the exchange rate from Euro to Dollars
-// Extend your solution to convert US dollars to British Pounds
-// Extend your solution to convert Euro to British Pounds
-// Extend your solution to add 13.12 Euro to 99 British Pounds and return 185.64 CAD
+/**
+ * Currency addition endpoints.
+ */
+router.get(
+  '/add/:amount/:currencyCode/:additionalAmount/:additionalCurrencyCode/:convertTo?',
+  (req, res) => {
+    const { amount, currencyCode, additionalAmount, additionalCurrencyCode, convertTo } =
+      req.params;
+
+    const total = addCurrencies({
+      amount,
+      currencyCode,
+      additionalAmount,
+      additionalCurrencyCode,
+      convertTo,
+    });
+
+    return res.json({
+      total: total.toFixed(2),
+      currencyCode: convertTo || 'USD',
+    });
+  },
+);
 
 export { router };

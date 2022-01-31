@@ -1,7 +1,9 @@
 # Manual endpoint tests (VS Code https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
+### To get all rates relative to a currency code.
+GET http://localhost:3001/api/v1/currency/rates/EUR
 
 ### Implement an End Point which can return the exchange rate from Euro to Dollars.
-GET http://localhost:3001/api/v1/currency/rates/EUR/USD
+GET http://localhost:3001/api/v1/currency/rate/EUR/USD
 
 
 ### Extend your solution to convert US dollars to British Pounds.

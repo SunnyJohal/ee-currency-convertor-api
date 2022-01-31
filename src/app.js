@@ -18,7 +18,7 @@ app.use(cors());
 // Routes.
 app.use(`/api/v1/currency`, currencyRouter);
 app.use('/livez', healthCheckRouter);
-app.use('/', serve, setup(yaml.load('open-api.yaml')));
+app.use('/docs', serve, setup(yaml.load('open-api.yaml')));
 
 // Error handling.
 app.use(routeNotFoundMiddleware);
