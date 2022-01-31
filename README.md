@@ -58,3 +58,30 @@ npm start
 
 # navigate to the following url in the browser: http://localhost:3001/docs
 ```
+
+## Example endpoints
+
+```bash
+### To get all rates relative to a currency code.
+curl http://localhost:3001/api/v1/currency/rates/EUR | json_pp
+```
+
+```bash
+### Implement an End Point which can return the exchange rate from Euro to Dollars.
+curl http://localhost:3001/api/v1/currency/rate/EUR/USD | json_pp
+```
+
+```bash
+### Extend your solution to convert US dollars to British Pounds.
+curl http://localhost:3001/api/v1/currency/convert/10.00/USD/GBP | json_pp
+```
+
+```bash
+### Extend your solution to convert Euro to British Pounds.
+curl http://localhost:3001/api/v1/currency/convert/10.00/EUR/GBP | json_pp
+```
+
+```bash
+### Extend your solution to add 13.12 Euro to 99 British Pounds and return 185.64 CAD.
+curl http://localhost:3001/api/v1/currency/add/13.12/EUR/99/GBP/CAD | json_pp
+```
