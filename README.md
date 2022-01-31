@@ -61,27 +61,32 @@ npm start
 
 ## Example endpoints
 
-```bash
-### To get all rates relative to a currency code.
-curl http://localhost:3001/api/v1/currency/rates/EUR | json_pp
-```
+To get all rates relative to a currency code.
 
 ```bash
-### Implement an End Point which can return the exchange rate from Euro to Dollars.
-curl http://localhost:3001/api/v1/currency/rate/EUR/USD | json_pp
+curl --silent http://localhost:3001/api/v1/currency/rates/EUR | json_pp
 ```
 
-```bash
-### Extend your solution to convert US dollars to British Pounds.
-curl http://localhost:3001/api/v1/currency/convert/10.00/USD/GBP | json_pp
-```
+Implement an End Point which can return the exchange rate from Euro to Dollars.
 
 ```bash
-### Extend your solution to convert Euro to British Pounds.
-curl http://localhost:3001/api/v1/currency/convert/10.00/EUR/GBP | json_pp
+curl --silent http://localhost:3001/api/v1/currency/rate/EUR/USD | json_pp
 ```
 
+Extend your solution to convert US dollars to British Pounds.
+
 ```bash
-### Extend your solution to add 13.12 Euro to 99 British Pounds and return 185.64 CAD.
-curl http://localhost:3001/api/v1/currency/add/13.12/EUR/99/GBP/CAD | json_pp
+curl --silent http://localhost:3001/api/v1/currency/convert/10.00/USD/GBP | json_pp
+```
+
+Extend your solution to convert Euro to British Pounds.
+
+```bash
+curl --silent http://localhost:3001/api/v1/currency/convert/10.00/EUR/GBP | json_pp
+```
+
+Extend your solution to add 13.12 Euro to 99 British Pounds and return 185.64 CAD.
+
+```bash
+curl --silent http://localhost:3001/api/v1/currency/add/13.12/EUR/99/GBP/CAD | json_pp
 ```
